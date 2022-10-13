@@ -1,2 +1,8 @@
 ../Drivers/Src/stm32f411x_gpio.c:14:6:GPIO_RCC	16	static
-../Drivers/Src/stm32f411x_gpio.c:69:6:GPIO_Init	16	static
+../Drivers/Src/stm32f411x_gpio.c:69:6:GPIO_Init	24	static
+../Drivers/Src/stm32f411x_gpio.c:119:6:GPIO_DeInit	16	static
+../Drivers/Src/stm32f411x_gpio.c:161:9:GPIO_ReadPin	24	static
+../Drivers/Src/stm32f411x_gpio.c:167:10:GPIO_ReadPort	24	static
+../Drivers/Src/stm32f411x_gpio.c:173:6:GPIO_SetPin	16	static
+../Drivers/Src/stm32f411x_gpio.c:177:6:GPIO_Set_Port	16	static
+../Drivers/Src/stm32f411x_gpio.c:181:6:GPIO_TooglePin	16	static

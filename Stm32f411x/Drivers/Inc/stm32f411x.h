@@ -8,6 +8,7 @@
 #ifndef INC_STM32F411X_H_
 #define INC_STM32F411X_H_
 #include <stdint.h>
+#include "stm32f411x_gpio.h"
 /***************************************************************************
  *		 Macros for flash,SRAM and system memory, macros contain base adresses
  */
@@ -100,7 +101,12 @@ RCC_RegDef *RCC = (RCC_RegDef*)DRV_RCC_BASE_ADR;
 #define RCC_GPIOE_DS()		RCC->RCC_AHB1ENR &=~ (1<<4)
 #define RCC_GPIOH_DS()		RCC->RCC_AHB1ENR &=~ (1<<7)
 
-
+#define GPIOA_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<0); (RCC->RCC_AHB1RSTR &=~(1<<0));} while(0)
+#define GPIOB_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<1); (RCC->RCC_AHB1RSTR &=~(1<<1));} while(0)
+#define GPIOC_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<2); (RCC->RCC_AHB1RSTR &=~(1<<2));} while(0)
+#define GPIOD_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<3); (RCC->RCC_AHB1RSTR &=~(1<<3));} while(0)
+#define GPIOE_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<4); (RCC->RCC_AHB1RSTR &=~(1<<4));} while(0)
+#define GPIOH_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<5); (RCC->RCC_AHB1RSTR &=~(1<<5));} while(0)
 /**************************************************************************
  * 										APB1
  **************************************************************************/

@@ -17,8 +17,7 @@
  */
 
 #include <stdint.h>
-#include "stm32f411x.h"
-#include "stm32f411x_gpio.h"
+
 int main(void)
 {
 

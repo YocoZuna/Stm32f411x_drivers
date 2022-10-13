@@ -67,7 +67,7 @@ void GPIO_RCC(GPIOx_RegDef *pGPIOx, uint8_t on_off);
  * GPIO initialization
  */
 void GPIO_Init(GPIOx_Handle_t *GPIO);
-void GPIO_DeInit(GPIOx_Handle_t *GPIO);
+void GPIO_DeInit(GPIOx_RegDef *GPIO);
 
 /*
  * Reading and sending to GPIO
@@ -75,7 +75,7 @@ void GPIO_DeInit(GPIOx_Handle_t *GPIO);
 uint8_t GPIO_ReadPin(GPIOx_RegDef *pGPIOx,uint8_t pinNumber);
 uint16_t GPIO_ReadPort(GPIOx_RegDef *pGPIOx);
 void GPIO_SetPin(GPIOx_RegDef *pGPIOx,uint8_t pinNumber,uint8_t on_off);
-void GPIO_Set_Port(GPIOx_RegDef *pGPIOx,uint16_t on_off);
+void GPIO_Set_Port(GPIOx_RegDef *pGPIOx,uint16_t value);
 void GPIO_TooglePin(GPIOx_RegDef *pGPIOx,uint8_t pinNumber);
 
 /*

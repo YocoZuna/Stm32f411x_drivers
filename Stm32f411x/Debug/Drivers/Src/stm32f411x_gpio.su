@@ -1,0 +1,2 @@
+../Drivers/Src/stm32f411x_gpio.c:14:6:GPIO_RCC	16	static
+../Drivers/Src/stm32f411x_gpio.c:69:6:GPIO_Init	16	static

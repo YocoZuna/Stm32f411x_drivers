@@ -25,7 +25,7 @@
 
 #define DRV_AHB2_BASE_ADR 				0x50000000U
 #define DRV_AHB1_BASE_ADR				0x40020000U
-#define DRV_APB2_BASE_ADR				0x40010000U
+#define DRV_APB2_BASE_ADR				(0x40010000U)
 #define DRV_APB1_BASE_ADR				0x40000000U
 
 /***************************************************************************
@@ -45,47 +45,6 @@
 #define DRV_GPIOE						(DRV_AHB1_BASE_ADR+0x1000)
 #define DRV_GPIOH						(DRV_AHB1_BASE_ADR+0x1C00)
 
-typedef struct
-{
-	volatile uint32_t	MODER;
-	volatile uint32_t	OTYPER;
-	volatile uint32_t	OSPEEDR;
-	volatile uint32_t	PUPDR;
-	volatile uint32_t 	IDR:16;
-	volatile uint32_t 	ODR:16;
-	volatile uint32_t 	BSRR;
-	volatile uint32_t 	LCKR:16;
-	volatile uint32_t 	AFR[2];
-
-}GPIOx_RegDef;
-
- GPIOx_RegDef *GPIOA    = ((GPIOx_RegDef*)DRV_GPIOA);
- GPIOx_RegDef *GPIOB	= ((GPIOx_RegDef*)DRV_GPIOB);
- GPIOx_RegDef *GPIOC	= ((GPIOx_RegDef*)DRV_GPIOC);
- GPIOx_RegDef *GPIOD	= ((GPIOx_RegDef*)DRV_GPIOD);
- GPIOx_RegDef *GPIOE	= ((GPIOx_RegDef*)DRV_GPIOE);
- GPIOx_RegDef *GPIOH	= ((GPIOx_RegDef*)DRV_GPIOH);
-
-
- typedef struct
- {
-	 volatile uint32_t RCC_CR;
-	 volatile uint32_t RCC_PLLCFGR;
-	 volatile uint32_t RCC_CFGR;
-	 volatile uint32_t RCC_CIR;
-	 volatile uint32_t RCC_AHB1RSTR;
-	 volatile uint32_t RCC_AHB2RSTR;
-	 const uint32_t RESERVED[2];
-	 volatile uint32_t RCC_APB1RSTR;
-	 volatile uint32_t RCC_APB2RSTR;
-	 const uint32_t RESERVED1[2];
-	 volatile uint32_t RCC_AHB1ENR;
-	 volatile uint32_t RCC_AHB2ENR;
-	 const uint32_t RESERVED2[2];
- }RCC_RegDef;
-
-
-RCC_RegDef *RCC = (RCC_RegDef*)DRV_RCC_BASE_ADR;
 
 #define RCC_GPIOA_EN()		RCC->RCC_AHB1ENR |= (1<<0)
 #define RCC_GPIOB_EN()		RCC->RCC_AHB1ENR |= (1<<1)
@@ -93,6 +52,8 @@ RCC_RegDef *RCC = (RCC_RegDef*)DRV_RCC_BASE_ADR;
 #define RCC_GPIOD_EN()		RCC->RCC_AHB1ENR |= (1<<3)
 #define RCC_GPIOE_EN()		RCC->RCC_AHB1ENR |= (1<<4)
 #define RCC_GPIOH_EN()		RCC->RCC_AHB1ENR |= (1<<7)
+#define RCC_SYSCFG_EN()		RCC->RCC_APB2ENR |= (1<<14)
+
 
 #define RCC_GPIOA_DS()		RCC->RCC_AHB1ENR &=~ (1<<0)
 #define RCC_GPIOB_DS()		RCC->RCC_AHB1ENR &=~ (1<<1)
@@ -130,6 +91,32 @@ RCC_RegDef *RCC = (RCC_RegDef*)DRV_RCC_BASE_ADR;
 
 #define DRV_EXTI						(DRV_APB2_BASE_ADR+0x3C00)
 #define DRV_SYSCFG						(DRV_APB2_BASE_ADR+0x3800)
+
+
+#define NVIC_ISER0						((uint32_t*)0xE000E100)
+#define NVIC_ISER1						((uint32_t*)0xE000E104)
+#define NVIC_ISER2						((uint32_t*)0xE000E108)
+#define NVIC_ISER3						((uint32_t*)0xE000E10C)
+
+
+#define NVIC_ICER0						((uint32_t*)0xE000E180)
+#define NVIC_ICER1						((uint32_t*)0xE000E184)
+#define NVIC_ICER2						((uint32_t*)0xE000E188)
+#define NVIC_ICER3						((uint32_t*)0xE000E18C)
+
+
+
+
+
+#define WHICH_GPIO_PORT(x)				(	(x==GPIOA) ? PA :\
+											(x==GPIOB) ? PB :\
+											(x==GPIOC) ? PC :\
+											(x==GPIOD) ? PD :\
+											(x==GPIOE) ? PE :\
+											(x==GPIOH) ? PH : 0)
+
+
+
 
 #define SET 1
 #define RESET 0

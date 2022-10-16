@@ -41,6 +41,30 @@
 #define GPIO_PULL_HIGH			1
 #define GPIO_PULL_LOW			2
 
+/*
+ * Interrupt port
+ */
+#define PA						0
+#define PB 						1
+#define PC 						2
+#define PD 						3
+#define PE 						4
+#define PH 						5
+
+ typedef struct
+ {
+ 	volatile uint32_t	MODER;
+ 	volatile uint32_t	OTYPER;
+ 	volatile uint32_t	OSPEEDR;
+ 	volatile uint32_t	PUPDR;
+ 	volatile uint32_t 	IDR;
+ 	volatile uint32_t 	ODR;
+ 	volatile uint32_t 	BSRR;
+ 	volatile uint32_t 	LCKR;
+ 	volatile uint32_t 	AFR[2];
+
+ }GPIOx_RegDef;
+
 typedef struct
 {
 	uint8_t pinNumber;
@@ -53,11 +77,58 @@ typedef struct
 
 typedef struct
 {
-	GPIOx_RegDef* pGPIOx;
+	GPIOx_RegDef *pGPIOx;
 	GPIOx_PinConfig_t GPIO_PinConfig;
 }GPIOx_Handle_t;
 
+typedef struct
+{
+	 volatile uint32_t RCC_CR;
+	 volatile uint32_t RCC_PLLCFGR;
+	 volatile uint32_t RCC_CFGR;
+	 volatile uint32_t RCC_CIR;
+	 volatile uint32_t RCC_AHB1RSTR;
+	 volatile uint32_t RCC_AHB2RSTR;
+	 const uint32_t RESERVED[2];
+	 volatile uint32_t RCC_APB1RSTR;
+	 volatile uint32_t RCC_APB2RSTR;
+	 const uint32_t RESERVED1[2];
+	 volatile uint32_t RCC_AHB1ENR;
+	 volatile uint32_t RCC_AHB2ENR;
+	 const uint32_t RESERVED2[2];
+}RCC_RegDef;
 
+typedef struct
+{
+	volatile uint32_t IMR;
+	volatile uint32_t EMR;
+	volatile uint32_t RTSR;
+	volatile uint32_t FTSR;
+	volatile uint32_t SWIER;
+	volatile uint32_t PR;
+}EXTI_RegDef;
+
+typedef struct
+{
+	volatile uint32_t MEMRRMP;
+	volatile uint32_t PMC;
+	volatile uint32_t EXTIR[4];
+	volatile uint32_t CMPCR;
+}SYSCFG_RegDef;
+
+
+#define GPIOA ((GPIOx_RegDef*)DRV_GPIOA)
+#define GPIOB ((GPIOx_RegDef*)DRV_GPIOB)
+#define GPIOC ((GPIOx_RegDef*)DRV_GPIOC)
+#define GPIOD ((GPIOx_RegDef*)DRV_GPIOD)
+#define GPIOE ((GPIOx_RegDef*)DRV_GPIOE)
+#define GPIOH ((GPIOx_RegDef*)DRV_GPIOH)
+
+#define RCC  ((RCC_RegDef*)DRV_RCC_BASE_ADR)
+
+#define EXTI ((EXTI_RegDef*)DRV_EXTI)
+
+#define SYSCFG  ((SYSCFG_RegDef*)DRV_SYSCFG)
 /*
  * GIO clock
  */
@@ -81,7 +152,7 @@ void GPIO_TooglePin(GPIOx_RegDef *pGPIOx,uint8_t pinNumber);
 /*
  *	GPIO interrupts
  */
-void GPIO_IRQConfig(uint8_t IRQNumber,uint8_t IRQPiority,uint8_t on_off);
+void GPIO_IRQ_IT_Config(uint8_t IRQNumber,uint8_t on_off);
 void GPIO_IRQHandler(uint8_t pinNumber);
 
 #endif

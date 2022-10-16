@@ -16,9 +16,41 @@
  ******************************************************************************
  */
 
-#include <stdint.h>
 
+#include <stdint.h>
+#include "stm32f411x.h"
+#include "stm32f411x_gpio.h"
 int main(void)
 {
+	GPIO_RCC(GPIOA, SET);
+	GPIOx_Handle_t Led;
+	Led.pGPIOx = GPIOA;
+	Led.GPIO_PinConfig.pinMode = GPIO_MODE_OUT;
+	Led.GPIO_PinConfig.pinNumber = 5;
+	Led.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
+	Led.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
+	Led.GPIO_PinConfig.pinSpeed = GPIO_SPEED_LOW;
+	GPIO_Init(&Led);
+
+	GPIO_RCC(GPIOC, SET);
+	GPIOx_Handle_t Button;
+	Button.pGPIOx = GPIOC;
+	Button.GPIO_PinConfig.pinMode = GPIO_MODE_INPUT;
+	Button.GPIO_PinConfig.pinNumber = 13;
+	Button.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
+	Button.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
+	Button.GPIO_PinConfig.pinSpeed = GPIO_SPEED_LOW;
+	GPIO_Init(&Button);
+	while(1)
+	{
+
+		if(GPIO_ReadPin(GPIOC, 13)==0)
+				{
+
+						for(int i=0; i<500000;i++);
+						GPIO_TooglePin(GPIOA, 5);
+				}
+	}
+
 
 }

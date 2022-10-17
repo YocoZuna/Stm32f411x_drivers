@@ -104,9 +104,10 @@
 #define NVIC_ICER2						((uint32_t*)0xE000E188)
 #define NVIC_ICER3						((uint32_t*)0xE000E18C)
 
-
-
-
+#define NVIC_IPR0						((uint32_t*)0xE000E400)
+#define NVIC_IPR1						((uint32_t*)0xE000E404)
+#define NVIC_IPR2						((uint32_t*)0xE000E408)
+#define NVIC_IPR3						((uint32_t*)0xE000E40C)
 
 #define WHICH_GPIO_PORT(x)				(	(x==GPIOA) ? PA :\
 											(x==GPIOB) ? PB :\

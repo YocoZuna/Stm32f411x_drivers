@@ -154,6 +154,6 @@ void GPIO_TooglePin(GPIOx_RegDef *pGPIOx,uint8_t pinNumber);
  */
 void GPIO_IRQ_IT_Config(uint8_t IRQNumber,uint8_t on_off);
 void GPIO_IRQHandler(uint8_t pinNumber);
-
+void GPIO_IRQ_Priority(uint8_t IRQNumber,uint8_t priority);
 #endif
 /* INC_STM32F411X_GPIO_H_*/

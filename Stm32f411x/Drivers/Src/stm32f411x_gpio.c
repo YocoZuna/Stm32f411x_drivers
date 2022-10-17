@@ -228,9 +228,24 @@ void GPIO_IRQ_IT_Config(uint8_t IRQNumber,uint8_t on_off)
 		}
 		else if (IRQNumber >= 64 && IRQNumber < 96)
 		{
-			*NVIC_ICER1 |= (1<<IRQNumber%64);
+			*NVIC_ICER2 |= (1<<IRQNumber%64);
 		}
 	}
 }
-void GPIO_IRQHandler(uint8_t pinNumber);
+void GPIO_IRQ_Priority(uint8_t IRQNumber,uint8_t priority)
+{
+	uint8_t tmp1 = IRQNumber%4; // Ktory rejestr
+	uint8_t tmp2 = IRQNumber%59; // Ktore miejsce w resejtrze
+	uint32_t* tmp3 = (NVIC_IPR0+(4*tmp1));
+	*tmp3 |= (priority<<(8*(tmp2<<4)));
+}
+
+
+void GPIO_IRQHandler(uint8_t pinNumber)
+{
+	if(EXTI->PR & (1<<pinNumber))
+	{
+		EXTI->PR |= (1<<pinNumber);
+	}
+}
 

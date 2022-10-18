@@ -114,7 +114,7 @@
 											(x==GPIOC) ? PC :\
 											(x==GPIOD) ? PD :\
 											(x==GPIOE) ? PE :\
-											(x==GPIOH) ? PH : 0)
+											(x==GPIOH) ? PH :0)
 
 
 

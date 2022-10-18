@@ -106,6 +106,7 @@ void GPIO_Init(GPIOx_Handle_t *GPIO)
 	else
 	{
 
+
 		//interrupt mode
 		if (GPIO->GPIO_PinConfig.pinMode <= GPIO_MODE_IT_FALLING)
 		{
@@ -125,15 +126,16 @@ void GPIO_Init(GPIOx_Handle_t *GPIO)
 			EXTI->RTSR |= (1<<GPIO->GPIO_PinConfig.pinNumber);
 		}
 
-		uint8_t  tmp1 = GPIO->GPIO_PinConfig.pinNumber/4;
-		uint8_t  tmp2 = GPIO->GPIO_PinConfig.pinNumber%4;
-		uint8_t port = WHICH_GPIO_PORT(GPIO);
+		uint32_t  tmp1 = GPIO->GPIO_PinConfig.pinNumber/4;
+		uint32_t  tmp2 = GPIO->GPIO_PinConfig.pinNumber%4;
+		uint32_t port = WHICH_GPIO_PORT(GPIO->pGPIOx);
 
+		RCC_SYSCFG_EN();
 		SYSCFG->EXTIR[tmp1] |= (port << (tmp2 *4));
-
+		EXTI->IMR |= (1<<GPIO->GPIO_PinConfig.pinNumber);
 
 		//Unmisking interrupt
-		EXTI->IMR |= (1<<GPIO->GPIO_PinConfig.pinNumber);
+
 	}
 
 	pinConfig = GPIO->GPIO_PinConfig.pinNumber/1;
@@ -220,15 +222,15 @@ void GPIO_IRQ_IT_Config(uint8_t IRQNumber,uint8_t on_off)
 	{
 		if (IRQNumber <=31)
 		{
-			*NVIC_ICER0 |= (1<<IRQNumber);
+			*NVIC_ISER0 |= (1<<IRQNumber);
 		}
 		else if (IRQNumber >32 && IRQNumber < 64)
 		{
-			*NVIC_ICER1 |= (1<<IRQNumber%32);
+			*NVIC_ISER1 |= (1<<IRQNumber%32);
 		}
 		else if (IRQNumber >= 64 && IRQNumber < 96)
 		{
-			*NVIC_ICER2 |= (1<<IRQNumber%64);
+			*NVIC_ISER2 |= (1<<IRQNumber%64);
 		}
 	}
 }

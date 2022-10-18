@@ -96,6 +96,8 @@ typedef struct
 	 volatile uint32_t RCC_AHB1ENR;
 	 volatile uint32_t RCC_AHB2ENR;
 	 const uint32_t RESERVED2[2];
+	 volatile uint32_t RCC_APB1ENR;
+	 volatile uint32_t RCC_APB2ENR;
 }RCC_RegDef;
 
 typedef struct

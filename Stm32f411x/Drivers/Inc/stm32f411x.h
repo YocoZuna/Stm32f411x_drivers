@@ -9,6 +9,7 @@
 #define INC_STM32F411X_H_
 #include <stdint.h>
 #include "stm32f411x_gpio.h"
+#include "stm32f411x_spi.h"
 /***************************************************************************
  *		 Macros for flash,SRAM and system memory, macros contain base adresses
  */
@@ -45,6 +46,9 @@
 #define DRV_GPIOE						(DRV_AHB1_BASE_ADR+0x1000)
 #define DRV_GPIOH						(DRV_AHB1_BASE_ADR+0x1C00)
 
+/*
+ * 						GPIO
+ */
 
 #define RCC_GPIOA_EN()		RCC->RCC_AHB1ENR |= (1<<0)
 #define RCC_GPIOB_EN()		RCC->RCC_AHB1ENR |= (1<<1)
@@ -68,6 +72,30 @@
 #define GPIOD_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<3); (RCC->RCC_AHB1RSTR &=~(1<<3));} while(0)
 #define GPIOE_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<4); (RCC->RCC_AHB1RSTR &=~(1<<4));} while(0)
 #define GPIOH_REG_RESET() 	do { RCC->RCC_AHB1RSTR |= (1<<5); (RCC->RCC_AHB1RSTR &=~(1<<5));} while(0)
+
+/**************************************************************************
+ * 											SPI
+ **************************************************************************/
+
+#define RCC_SPI1_EN()		RCC->RCC_APB2ENR |= (1<<12)
+#define RCC_SPI2_EN()		RCC->RCC_APB1ENR |= (1<<14)
+#define RCC_SPI3_EN()		RCC->RCC_APB1ENR |= (1<<15)
+#define RCC_SPI4_EN()		RCC->RCC_APB2ENR |= (1<<13)
+
+
+
+#define RCC_SPI1_DS()		RCC->RCC_AHB1ENR &=~ (1<<0)
+#define RCC_SPI2_DS()		RCC->RCC_AHB1ENR &=~ (1<<14)
+#define RCC_SPI3_DS()		RCC->RCC_AHB1ENR &=~ (1<<14)
+#define RCC_SPI4_DS()		RCC->RCC_AHB1ENR &=~ (1<<3)
+
+
+#define SPI1_REG_RESET() 	do { RCC->RCC_APB2RSTR |= (1<<12); (RCC->RCC_APB2RSTR &=~(1<<12));} while(0)
+#define	SPI2_REG_RESET() 	do { RCC->RCC_APB1RSTR |= (1<<14); (RCC->RCC_APB1RSTR &=~(1<<14));} while(0)
+#define SPI3_REG_RESET() 	do { RCC->RCC_APB1RSTR |= (1<<15); (RCC->RCC_APB1RSTR &=~(1<<15));} while(0)
+#define SPI4_REG_RESET() 	do { RCC->RCC_APB2RSTR |= (1<<13); (RCC->RCC_APB2RSTR &=~(1<<13));} while(0)
+
+
 /**************************************************************************
  * 										APB1
  **************************************************************************/

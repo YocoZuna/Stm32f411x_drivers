@@ -30,19 +30,20 @@ typedef struct
 	uint8_t SPI_CPOL;
 	uint8_t SPI_CPHA;
 	uint8_t SPI_SSM;
+
 }SPIx_ConfigDef;
 
 typedef struct
 {
-	SPI_RegDef *pSPIx;
-	SPI_ConfigDef SPIConifg;
+	SPIx_RegDef *pSPIx;
+	SPIx_ConfigDef SPIConifg;
 }SPIx_Handle_t;
 
 
 #define SPI1 ((SPIx_RegDef*)DRV_SPI1)
 #define SPI2 ((SPIx_RegDef*)DRV_SPI2)
 #define SPI3 ((SPIx_RegDef*)DRV_SPI3)
-#define SPI3 ((SPIx_RegDef*)DRV_SPI4)
+#define SPI4 ((SPIx_RegDef*)DRV_SPI4)
 
 
 void SPI_RCC(SPIx_RegDef *xSPI,uint8_t on_off);

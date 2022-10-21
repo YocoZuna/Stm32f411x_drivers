@@ -21,9 +21,9 @@ void GPIO_RCC(GPIOx_RegDef *pGPIOx, uint8_t on_off)
 	{
 		RCC_GPIOA_EN();
 	}
-	else if ((pGPIOx == GPIOB && on_off == RESET))
+	else if ((pGPIOx == GPIOA && on_off == RESET))
 	{
-		RCC_GPIOB_DS();
+		RCC_GPIOA_DS();
 	}
 	if(pGPIOx == GPIOB && on_off == SET)
 	{

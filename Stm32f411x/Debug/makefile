@@ -60,8 +60,8 @@ all: main-build
 main-build: Stm32f411x.elf secondary-outputs
 
 # Tool invocations
-Stm32f411x.elf Stm32f411x.map: $(OBJS) $(USER_OBJS) C:\Users\dawid\STM32CubeIDE\workspace_1.10.1\Stm32f411x_drivers\Stm32f411x\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Stm32f411x.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\dawid\STM32CubeIDE\workspace_1.10.1\Stm32f411x_drivers\Stm32f411x\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Stm32f411x.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Stm32f411x.elf Stm32f411x.map: $(OBJS) $(USER_OBJS) C:\Users\dawid\Documents\GitHub\Stm32f411x_drivers\Stm32f411x\STM32F411RETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Stm32f411x.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\dawid\Documents\GitHub\Stm32f411x_drivers\Stm32f411x\STM32F411RETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Stm32f411x.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

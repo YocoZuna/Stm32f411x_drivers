@@ -1,4 +1,5 @@
 "./Drivers/Src/stm32f411x_gpio.o"
+"./Drivers/Src/stm32f411x_spi.o"
 "./Src/main.o"
 "./Src/syscalls.o"
 "./Src/sysmem.o"

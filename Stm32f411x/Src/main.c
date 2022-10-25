@@ -20,37 +20,57 @@
 #include <stdint.h>
 #include "stm32f411x.h"
 #include "stm32f411x_gpio.h"
+#include  "stm32f411x_spi.h"
+
 int main(void)
 {
-	GPIO_RCC(GPIOA, SET);
-	GPIOx_Handle_t Led;
-	Led.pGPIOx = GPIOA;
-	Led.GPIO_PinConfig.pinMode = GPIO_MODE_OUT;
-	Led.GPIO_PinConfig.pinNumber = 5;
-	Led.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
-	Led.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
-	Led.GPIO_PinConfig.pinSpeed = GPIO_SPEED_LOW;
-	GPIO_Init(&Led);
+	/*
+	*					Configuring GPIO for SPI alt function 5
+	===================================================================================================
+	*/
+	GPIOx_Handle_t hSPI2Pins;
+	hSPI2Pins.pGPIOx = GPIOB;
+	hSPI2Pins.GPIO_PinConfig.pinMode = GPIO_MODE_ALF;
+	hSPI2Pins.GPIO_PinConfig.pinAltFun = 5;
+	hSPI2Pins.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
+	hSPI2Pins.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
+	hSPI2Pins.GPIO_PinConfig.pinSpeed = GPIO_SPEED_HIGH;
 
-	GPIO_RCC(GPIOC, SET);
-	GPIOx_Handle_t Button;
-	Button.pGPIOx = GPIOC;
-	Button.GPIO_PinConfig.pinMode = GPIO_MODE_INPUT;
-	Button.GPIO_PinConfig.pinNumber = 13;
-	Button.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
-	Button.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
-	Button.GPIO_PinConfig.pinSpeed = GPIO_SPEED_LOW;
-	GPIO_Init(&Button);
-	while(1)
-	{
+	//MISO
+	SPI2Pins.GPIO_PinConfig.pinNumber = 14;
+	GPIO_Init(&SPI2Pins);
+	//MOSI
+	SPI2Pins.GPIO_PinConfig.pinNumber = 15;
+	GPIO_Init(&SPI2Pins);
+	//NSS
+	SPI2Pins.GPIO_PinConfig.pinNumber = 12;
+	GPIO_Init(&SPI2Pins);
+	//SCLK
+	SPI2Pins.GPIO_PinConfig.pinNumber = 10;
+	GPIO_Init(&SPI2Pins);
+	/*
+	===================================================================================================
+	*/
+	/*
+	*					Configuring SPI2
+	===================================================================================================
+	*/
+	SPIx_Handle_t hSPI2;
 
-		if(GPIO_ReadPin(GPIOC, 13)==0)
-				{
+	hSPI2.pSPIx = SPI2;
+	hSPI2.SPIConifg.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
+	hSPI2.SPIConifg.SPI_BusConfig  = SPI_BUSCONFIG_FULL;
+	hSPI2.SPIConifg.SPI_CLKSpeed = SPI_SPEED_2;
+	hSPI2.SPIConifg.SPI_DFF = SPI_DFF_8bit;
+	hSPI2.SPIConifg.SPI_CPHA = SPI_CPHA_First;
+	hSPI2.SPIConifg.SPI_CPOL = SPI_CPOL_FALLING;
+	hSPI2.SPIConifg.SPI_SSM = SPI_NSS_SOFTWARE;
+	/*
+	===================================================================================================
+	*/
+	char userData[30] = "Hello from SPI";
 
-						for(int i=0; i<500000;i++);
-						GPIO_TooglePin(GPIOA, 5);
-				}
-	}
-
-
+	SPI_Send_Polling(&hSPI2,(uint8_t*)userData,strlen(userData));
+	while (1);
+	
 }

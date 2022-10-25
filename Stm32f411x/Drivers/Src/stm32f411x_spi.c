@@ -6,20 +6,6 @@
  */
 #include "stm32f411x.h"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void SPI_RCC(SPIx_RegDef *xSPI,uint8_t on_off)
 {
 	if( SPI1 == xSPI && on_off == SET)
@@ -79,7 +65,7 @@ void SPI_Init(SPIx_Handle_t *xSPI)
 	 */
 	if(xSPI->SPIConifg.SPI_SSM == SPI_NSS_SOFTWARE)
 		xSPI->pSPIx->SPI_CR1 |= (xSPI->SPIConifg.SPI_SSM<<9);
-	//TODO
+
 	/*
 	 * Clock speed
 	 */
@@ -120,16 +106,16 @@ void SPI_DeInit(SPIx_RegDef *xSPI)
 void SPI_Receive_Polling(SPIx_RegDef *xSPI, uint8_t *RXbuffor,uint32_t length);
 void SPI_Send_Polling(SPIx_RegDef *xSPI, uint8_t *TXbuffor,uint32_t length)
 {
-	while(len>0)
+	while(length>0)
 	{
 		while(!(xSPI->SPI_SR &(1<<1))); // Wait for TX buffor empty
 
 		if(xSPI->SPI_CR1 & (1<11))
 		{
-			xSPI->SPI_DR = *((unt16_t*)TXbuffor);
+			xSPI->SPI_DR = *((uint16_t*)TXbuffor);
 			length--;
 			length--;
-			(unt16_t*)TXbuffor++;
+			(uint16_t*)TXbuffor++;
 		}
 		else
 		{

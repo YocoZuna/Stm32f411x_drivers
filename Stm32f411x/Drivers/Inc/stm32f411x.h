@@ -26,7 +26,7 @@
 
 #define DRV_AHB2_BASE_ADR 				0x50000000U
 #define DRV_AHB1_BASE_ADR				0x40020000U
-#define DRV_APB2_BASE_ADR				(0x40010000U)
+#define DRV_APB2_BASE_ADR				0x40010000U
 #define DRV_APB1_BASE_ADR				0x40000000U
 
 /***************************************************************************

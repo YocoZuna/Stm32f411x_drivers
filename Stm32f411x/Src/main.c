@@ -21,10 +21,9 @@
 #include <string.h>
 #include "stm32f411x.h"
 #include "stm32f411x_gpio.h"
-#include  "stm32f411x_spi.h"
-
 int main(void)
 {
+
 	/*
 
 	*					Configuring GPIO for SPI alt function 5
@@ -81,10 +80,11 @@ int main(void)
 
 	while (1)
 	{
-		SPI_Send_Polling(&hSPI2,(uint8_t*)userData,strlen(userData));
+		SPI_Send_Polling(SPI2,(uint8_t*)userData,strlen(userData));
 
 		for (int i =0;i<500;i++);
 	}
+
 
 
 }

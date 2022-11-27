@@ -18,6 +18,7 @@
 
 
 #include <stdint.h>
+#include <string.h>
 #include "stm32f411x.h"
 #include "stm32f411x_gpio.h"
 #include  "stm32f411x_spi.h"
@@ -25,9 +26,14 @@
 int main(void)
 {
 	/*
+
 	*					Configuring GPIO for SPI alt function 5
 	===================================================================================================
 	*/
+
+
+	RCC_GPIOB_EN();
+	RCC_SPI2_EN();
 	GPIOx_Handle_t hSPI2Pins;
 	hSPI2Pins.pGPIOx = GPIOB;
 	hSPI2Pins.GPIO_PinConfig.pinMode = GPIO_MODE_ALF;
@@ -37,17 +43,18 @@ int main(void)
 	hSPI2Pins.GPIO_PinConfig.pinSpeed = GPIO_SPEED_HIGH;
 
 	//MISO
-	SPI2Pins.GPIO_PinConfig.pinNumber = 14;
-	GPIO_Init(&SPI2Pins);
+	//hSPI2Pins.GPIO_PinConfig.pinNumber = 14;
+	//GPIO_Init(&hSPI2Pins);
 	//MOSI
-	SPI2Pins.GPIO_PinConfig.pinNumber = 15;
-	GPIO_Init(&SPI2Pins);
+	hSPI2Pins.GPIO_PinConfig.pinNumber = 15;
+	GPIO_Init(&hSPI2Pins);
 	//NSS
-	SPI2Pins.GPIO_PinConfig.pinNumber = 12;
-	GPIO_Init(&SPI2Pins);
+	//hSPI2Pins.GPIO_PinConfig.pinNumber = 12;
+	//GPIO_Init(&hSPI2Pins);
 	//SCLK
-	SPI2Pins.GPIO_PinConfig.pinNumber = 10;
-	GPIO_Init(&SPI2Pins);
+	hSPI2Pins.GPIO_PinConfig.pinNumber = 10;
+	GPIO_Init(&hSPI2Pins);
+
 	/*
 	===================================================================================================
 	*/
@@ -55,22 +62,29 @@ int main(void)
 	*					Configuring SPI2
 	===================================================================================================
 	*/
+
 	SPIx_Handle_t hSPI2;
 
 	hSPI2.pSPIx = SPI2;
 	hSPI2.SPIConifg.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
 	hSPI2.SPIConifg.SPI_BusConfig  = SPI_BUSCONFIG_FULL;
-	hSPI2.SPIConifg.SPI_CLKSpeed = SPI_SPEED_2;
 	hSPI2.SPIConifg.SPI_DFF = SPI_DFF_8bit;
 	hSPI2.SPIConifg.SPI_CPHA = SPI_CPHA_First;
 	hSPI2.SPIConifg.SPI_CPOL = SPI_CPOL_FALLING;
 	hSPI2.SPIConifg.SPI_SSM = SPI_NSS_SOFTWARE;
-	/*
-	===================================================================================================
-	*/
-	char userData[30] = "Hello from SPI";
 
-	SPI_Send_Polling(&hSPI2,(uint8_t*)userData,strlen(userData));
-	while (1);
-	
+	SPI_Init(&hSPI2);
+
+
+	char userData[] = "Hello from SPI";
+
+
+	while (1)
+	{
+		SPI_Send_Polling(&hSPI2,(uint8_t*)userData,strlen(userData));
+
+		for (int i =0;i<500;i++);
+	}
+
+
 }

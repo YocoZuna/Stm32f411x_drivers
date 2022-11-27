@@ -138,10 +138,10 @@ void GPIO_Init(GPIOx_Handle_t *GPIO)
 
 	}
 
-	pinConfig = GPIO->GPIO_PinConfig.pinNumber/1;
-	uint8_t altNumber = GPIO->GPIO_PinConfig.pinNumber%8;
-		GPIO->pGPIOx->AFR[altNumber]  &=~(0xF<<4 *(GPIO->GPIO_PinConfig.pinNumber));
-		GPIO->pGPIOx->AFR[altNumber]  |= (GPIO->GPIO_PinConfig.pinAltFun <<4*(GPIO->GPIO_PinConfig.pinNumber));
+	pinConfig = GPIO->GPIO_PinConfig.pinNumber%8;
+	uint8_t altNumber = GPIO->GPIO_PinConfig.pinNumber/8;
+		GPIO->pGPIOx->AFR[altNumber]  &=~(0xF<<4 *(pinConfig));
+		GPIO->pGPIOx->AFR[altNumber]  |= (GPIO->GPIO_PinConfig.pinAltFun <<4*(pinConfig));
 		pinConfig = 0;
 		altNumber = 0 ;
 

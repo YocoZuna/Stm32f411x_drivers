@@ -106,7 +106,7 @@
 #define DRV_USART2						(APB1_BASE_ADR+0x4400)
 
 #define DRV_SPI3						(DRV_APB2_BASE_ADR+0x3C00)
-#define DRV_SPI2						(DRV_APB2_BASE_ADR+0x3400)
+#define DRV_SPI2						(DRV_APB1_BASE_ADR+0x3800)
 
 /*
  * APB2

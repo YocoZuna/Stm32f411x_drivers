@@ -43,6 +43,10 @@ void SPI_RCC(SPIx_RegDef *xSPI,uint8_t on_off)
 }
 void SPI_Init(SPIx_Handle_t *xSPI)
 {
+	/*
+	* Enable SPI
+	*/
+
 	if(xSPI->SPIConifg.SPI_DeviceMode == SPI_DEVICE_MODE_MASTER)
 		/*
 		 * Device mode
@@ -64,8 +68,10 @@ void SPI_Init(SPIx_Handle_t *xSPI)
 	 * SSM
 	 */
 	if(xSPI->SPIConifg.SPI_SSM == SPI_NSS_SOFTWARE)
+	{
 		xSPI->pSPIx->SPI_CR1 |= (xSPI->SPIConifg.SPI_SSM<<9);
-
+		xSPI->pSPIx->SPI_CR1 |= (xSPI->SPIConifg.SPI_SSM<<8);
+	}
 	/*
 	 * Clock speed
 	 */
@@ -82,6 +88,7 @@ void SPI_Init(SPIx_Handle_t *xSPI)
 
 	if(xSPI->SPIConifg.SPI_CPHA == SPI_CPHA_Second)
 		xSPI->pSPIx->SPI_CR1 |= (xSPI->SPIConifg.SPI_CPHA<<1);
+	xSPI->pSPIx->SPI_CR1 |= (1<<6);
 }
 void SPI_DeInit(SPIx_RegDef *xSPI)
 {
@@ -101,25 +108,28 @@ void SPI_DeInit(SPIx_RegDef *xSPI)
 	{
 		SPI4_REG_RESET();
 	}
+
 }
 
 void SPI_Receive_Polling(SPIx_RegDef *xSPI, uint8_t *RXbuffor,uint32_t length);
-void SPI_Send_Polling(SPIx_RegDef *xSPI, uint8_t *TXbuffor,uint32_t length)
+void SPI_Send_Polling(SPIx_Handle_t *xSPI, uint8_t *TXbuffor,uint32_t length)
 {
 	while(length>0)
 	{
-		while(!(xSPI->SPI_SR &(1<<1))); // Wait for TX buffor empty
 
-		if(xSPI->SPI_CR1 & (1<11))
+
+
+		if(xSPI->pSPIx->SPI_CR1 & (1<11))
 		{
-			xSPI->SPI_DR = *((uint16_t*)TXbuffor);
+			xSPI->pSPIx->SPI_DR = *((uint16_t*)TXbuffor);
 			length--;
 			length--;
 			(uint16_t*)TXbuffor++;
 		}
 		else
 		{
-			xSPI->SPI_DR = *TXbuffor;
+			xSPI->pSPIx->SPI_DR = *((uint8_t*)TXbuffor);
+
 			length--;
 			TXbuffor++;
 		}

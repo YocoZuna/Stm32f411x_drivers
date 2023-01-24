@@ -21,6 +21,8 @@
 #include <string.h>
 #include "stm32f411x.h"
 #include "stm32f411x_gpio.h"
+#include "stm32f411x_timers.h"
+uint32_t delay;
 int main(void)
 {
 
@@ -31,58 +33,28 @@ int main(void)
 	*/
 
 
-	RCC_GPIOB_EN();
-	RCC_SPI2_EN();
-	GPIOx_Handle_t hSPI2Pins;
-	hSPI2Pins.pGPIOx = GPIOB;
-	hSPI2Pins.GPIO_PinConfig.pinMode = GPIO_MODE_ALF;
-	hSPI2Pins.GPIO_PinConfig.pinAltFun = 5;
-	hSPI2Pins.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
-	hSPI2Pins.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
-	hSPI2Pins.GPIO_PinConfig.pinSpeed = GPIO_SPEED_HIGH;
+	RCC_GPIOA_EN();
 
-	//MISO
-	//hSPI2Pins.GPIO_PinConfig.pinNumber = 14;
-	//GPIO_Init(&hSPI2Pins);
-	//MOSI
-	hSPI2Pins.GPIO_PinConfig.pinNumber = 15;
-	GPIO_Init(&hSPI2Pins);
-	//NSS
-	//hSPI2Pins.GPIO_PinConfig.pinNumber = 12;
-	//GPIO_Init(&hSPI2Pins);
-	//SCLK
-	hSPI2Pins.GPIO_PinConfig.pinNumber = 10;
-	GPIO_Init(&hSPI2Pins);
-
-	/*
-	===================================================================================================
-	*/
-	/*
-	*					Configuring SPI2
-	===================================================================================================
-	*/
-
-	SPIx_Handle_t hSPI2;
-
-	hSPI2.pSPIx = SPI2;
-	hSPI2.SPIConifg.SPI_DeviceMode = SPI_DEVICE_MODE_MASTER;
-	hSPI2.SPIConifg.SPI_BusConfig  = SPI_BUSCONFIG_FULL;
-	hSPI2.SPIConifg.SPI_DFF = SPI_DFF_8bit;
-	hSPI2.SPIConifg.SPI_CPHA = SPI_CPHA_First;
-	hSPI2.SPIConifg.SPI_CPOL = SPI_CPOL_FALLING;
-	hSPI2.SPIConifg.SPI_SSM = SPI_NSS_SOFTWARE;
-
-	SPI_Init(&hSPI2);
+	GPIOx_Handle_t LED;
+	LED.pGPIOx = GPIOA;
+	LED.GPIO_PinConfig.pinNumber = 5;
+	LED.GPIO_PinConfig.pinMode = GPIO_MODE_OUT;
+	LED.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
+	LED.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
+	LED.GPIO_PinConfig.pinSpeed = GPIO_SPEED_HIGH;
 
 
-	char userData[] = "Hello from SPI";
+	GPIO_Init(&LED);
+
+
 
 
 	while (1)
 	{
-		SPI_Send_Polling(SPI2,(uint8_t*)userData,strlen(userData));
+		//SPI_Send_Polling(SPI2,(uint8_t*)userData,strlen(userData));
+		GPIO_TooglePin(GPIOA, 5);
+		System_Delay(5000);
 
-		for (int i =0;i<500;i++);
 	}
 
 

@@ -145,7 +145,14 @@
 											(x==GPIOH) ? PH :0)
 
 
+/**************************************************************************
+ * 										SysTick
+ **************************************************************************/
 
+#define SYST_CSR						((uint32_t*)0xE000E010)
+#define SYST_RVR						((uint32_t*)0xE000E014)
+#define SYST_CVR						((uint32_t*)0xE000E018)
+#define SYST_CALIB						((uint32_t*)0xE000E01C)
 
 #define SET 1
 #define RESET 0

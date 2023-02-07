@@ -45,28 +45,31 @@ void USART_RCC(USARTx_RegDef *xUSART,uint8_t on_off)
 }
 void USART_Init(USARTx_Handle_t *xUSART)
 {
+    /*Activating USART*/
+    xUSART->pUSART->USART_CR1 | = (1<<13);
     /*Devie mode */ // We first chek for RXTX mode becuase this mode whill be used most offten
     if (xUSART->USARTConfig.USART_Mode == 2)
     {
-        
+        xUSART->pUSART->USART_CR1 | = (1<<3); //TX enable
+        xUSART->pUSART->USART_CR1 | = (1<<2); // Rx enable
     }
     else if (xUSART->USARTConfig.USART_Mode == 1)
     {
-        
+        xUSART->pUSART->USART_CR1 | = (1<<3);
     }
     else if (xUSART->USARTConfig.USART_Mode == 0)
     {
-        
+        xUSART->pUSART->USART_CR1 | = (1<<2);
     }
     /********************************************************************************************/
     /* Word length*/
     if (xUSART->USARTConfig.USART_Word_length == 0 )
     {
-
+        ;// Here we do not nothing because by default word length is 8bit 
     }
     else if  (xUSART->USARTConfig.USART_Word_length == 1 )
     {
-
+        xUSART->pUSART->USART_CR1 |= (1<<12);
     }
     /********************************************************************************************/
     /* Hardware control */
@@ -90,15 +93,16 @@ void USART_Init(USARTx_Handle_t *xUSART)
     /* Parity*/
     if (xUSART->USARTConfig.USART_Parity == 0)
     {
-
+        ;// Here we dont nothing because by default parity is disabled
     }
     else if (xUSART->USARTConfig.USART_Parity==1)
     {
-        
+        xUSART->pUSART->USART_CR1 |= (1<<10);
+        xUSART->pUSART->USART_CR1 |= (1<<9);
     }
     else if (xUSART->USARTConfig.USART_Parity==2)
     {
-        
+        xUSART->pUSART->USART_CR1 |= (1<<10);
     }
     /********************************************************************************************/
     /* Stop bits*/
@@ -120,6 +124,7 @@ void USART_Init(USARTx_Handle_t *xUSART)
     }
     /********************************************************************************************/
     // TODO Implement baudrate 
+    // Should be smothing more smart than a simple if else if 8oip
 }
 void USART_DeInit(USARTx_RegDef *xUSART)
 {
@@ -147,7 +152,7 @@ void USART_Send_Polling(USARTx_RegDef *xUSART, uint8_t *TXbuffor,uint32_t length
 {
 	while(length>0)
 	{
-
+        /*TODO Change this function*/
 
 		while(((xUSART->USART_SR)>>1)==0);
 		if(xUSART->USART_CR1 & (1<11))

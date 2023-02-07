@@ -55,7 +55,7 @@ void SPI_RCC(SPIx_RegDef *xSPI,uint8_t on_off)
 		RCC_SPI4_DS();
 	}
 }
-void SPI_Init(SPIx_Handle_t *xSPI)
+void USART_Init(SPIx_Handle_t *xSPI)
 {
 	/*
 	* Enable SPI
@@ -129,7 +129,7 @@ void SPI_DeInit(SPIx_RegDef *xSPI)
 
 }
 
-void SPI_Receive_Polling(SPIx_RegDef *xSPI, uint8_t *RXbuffor,uint32_t length);
+void USART_Receive_Polling(SPIx_RegDef *xSPI, uint8_t *RXbuffor,uint32_t length);
 void SPI_Send_Polling(SPIx_RegDef *xSPI, uint8_t *TXbuffor,uint32_t length)
 {
 	while(length>0)

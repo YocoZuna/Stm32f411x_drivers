@@ -22,7 +22,7 @@
 #include "stm32f411x.h"
 #include "stm32f411x_gpio.h"
 #include "stm32f411x_timers.h"
-uint32_t delay;
+
 int main(void)
 {
 

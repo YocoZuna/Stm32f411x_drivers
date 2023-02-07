@@ -10,7 +10,7 @@
 
 #include "stm32f411x_timers.h"
 #include "stm32f411x.h"
-volatile uint32_t delay;
+uint32_t delay;
 
 
 static void System_TimerPreInit(uint32_t reload)
@@ -40,8 +40,13 @@ void System_Delay(uint32_t ntime)
 
 }
 
+static void decrement(uint32_t time)
+{
+
+	if(time)
+		time--;
+}
 void SysTick_Handler(void)
 {
-  if(delay)
-	  delay--;
+  decrement(delay);
 }

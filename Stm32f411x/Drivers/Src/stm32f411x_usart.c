@@ -45,21 +45,20 @@ void USART_RCC(USARTx_RegDef *xUSART,uint8_t on_off)
 }
 void USART_Init(USARTx_Handle_t *xUSART)
 {
-    /*Activating USART*/
-    xUSART->pUSART->USART_CR1 | = (1<<13);
+    
     /*Devie mode */ // We first chek for RXTX mode becuase this mode whill be used most offten
     if (xUSART->USARTConfig.USART_Mode == 2)
     {
-        xUSART->pUSART->USART_CR1 | = (1<<3); //TX enable
-        xUSART->pUSART->USART_CR1 | = (1<<2); // Rx enable
+        xUSART->pUSART->USART_CR1 |= (1<<3); //TX enable
+        xUSART->pUSART->USART_CR1 |= (1<<2); // Rx enable
     }
     else if (xUSART->USARTConfig.USART_Mode == 1)
     {
-        xUSART->pUSART->USART_CR1 | = (1<<3);
+        xUSART->pUSART->USART_CR1 |= (1<<3);
     }
     else if (xUSART->USARTConfig.USART_Mode == 0)
     {
-        xUSART->pUSART->USART_CR1 | = (1<<2);
+        xUSART->pUSART->USART_CR1 |= (1<<2);
     }
     /********************************************************************************************/
     /* Word length*/
@@ -125,6 +124,18 @@ void USART_Init(USARTx_Handle_t *xUSART)
     /********************************************************************************************/
     // TODO Implement baudrate 
     // Should be smothing more smart than a simple if else if 8oip
+    uint32_t sysclock  = 16000000;
+
+
+    float usartdiv = sysclock/(16*(float)xUSART->USARTConfig.USART_Baudrate);
+    float fraction_temp = usartdiv;
+    uint8_t mantisa = usartdiv - fraction_temp;
+    uint8_t fraction = (fraction_temp-mantisa)*16;
+
+    xUSART->pUSART->USART_BRR |= (mantisa<<4);
+    xUSART->pUSART->USART_BRR |= (fraction<<0);
+    // Enable usart
+    xUSART->pUSART->USART_CR1 |= (1<<13);
 }
 void USART_DeInit(USARTx_RegDef *xUSART)
 {

@@ -1,0 +1,4 @@
+../Drivers/Src/stm32f411x_usart.c:11:6:USART_RCC	16	static
+../Drivers/Src/stm32f411x_usart.c:50:6:USART_Init	40	static
+../Drivers/Src/stm32f411x_usart.c:148:6:USART_DeInit	16	static
+../Drivers/Src/stm32f411x_usart.c:174:6:USART_Send_Polling	32	static

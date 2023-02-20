@@ -55,7 +55,7 @@ void SPI_RCC(SPIx_RegDef *xSPI,uint8_t on_off)
 		RCC_SPI4_DS();
 	}
 }
-void USART_Init(SPIx_Handle_t *xSPI)
+void SPI_Init(SPIx_Handle_t *xSPI)
 {
 	/*
 	* Enable SPI

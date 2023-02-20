@@ -22,7 +22,7 @@
 #include "stm32f411x.h"
 #include "stm32f411x_gpio.h"
 #include "stm32f411x_timers.h"
-
+#include "stm32f411x_usart.h"
 int main(void)
 {
 
@@ -34,10 +34,24 @@ int main(void)
 
 
 	RCC_GPIOA_EN();
+	RCC_USART2_EN();
+	// Enable FPU
+	uint32_t* FPU  = CPACR;
+	*FPU |= (0xF<<20);
+	USARTx_Handle_t Serial2;
+	Serial2.pUSART = USART2;
+	Serial2.USARTConfig.USART_Baudrate = 115200;
+	Serial2.USARTConfig.USART_Hardware_Control = USART_CONTROL_NONE;
+	Serial2.USARTConfig.USART_Mode = USART_MODE_ONLY_TX;
+	Serial2.USARTConfig.USART_Parity  = USART_PARITY_NONE;
+	Serial2.USARTConfig.USART_Stop_Bits = USART_STOP_1;
+	Serial2.USARTConfig.USART_Word_length = USART_WORD_8bit;
 
+	USART_Init(&Serial2);
 	GPIOx_Handle_t LED;
 	LED.pGPIOx = GPIOA;
-	LED.GPIO_PinConfig.pinNumber = 5;
+	LED.GPIO_PinConfig.pinNumber = 2;
+	LED.GPIO_PinConfig.pinAltFun = 7;
 	LED.GPIO_PinConfig.pinMode = GPIO_MODE_OUT;
 	LED.GPIO_PinConfig.pinOType = GPIO_OUTPUT_PP;
 	LED.GPIO_PinConfig.pinPuPd = GPIO_PULL_NONE;
@@ -48,12 +62,12 @@ int main(void)
 
 
 
-
+	char buffor[10] = "Hello";
 	while (1)
 	{
 		//SPI_Send_Polling(SPI2,(uint8_t*)userData,strlen(userData));
-		GPIO_TooglePin(GPIOA, 5);
-		System_Delay(5000);
+
+		USART_Send_Polling(&Serial2,(uint8_t*)buffor,strlen(buffor));
 
 	}
 

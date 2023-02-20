@@ -77,12 +77,12 @@ typedef struct
 /********************************Prototypes**********************/
 
 
-void USART_RCC (USARTx_RegDef * USART,uint8_t on_off);
-void USART_Init (USARTx_Handle_t * USART);
-void USART_DeInit(USARTx_RegDef * USART);
+void USART_RCC(USARTx_RegDef * xUSART,uint8_t on_off);
 
-void USART_Receive_Polling (USARTx_RegDef * USART, uint8_t *RXbuffor,uint32_t length);
-void USART_Send_Polling (USARTx_RegDef * USART, uint8_t *TXbuffor,uint32_t length);
+void USART_DeInit(USARTx_RegDef * xUSART);
+void USART_Init(USARTx_Handle_t *xUSART);
+//void USART_Receive_Polling (USARTx_Handle_t* xUSART, uint8_t *RXbuffor,uint32_t length);
+void USART_Send_Polling (USARTx_Handle_t* xUSART, uint8_t *TXbuffor,uint32_t length);
 
 void USART_IRQ_IT_Config(uint8_t IRQNumber,uint8_t on_off);
 void USART_IRQHandler (USARTx_Handle_t *pHandle);

@@ -96,7 +96,7 @@ typedef struct
 
 
 void SPI_RCC(SPIx_RegDef *xSPI,uint8_t on_off);
-void USART_Init(SPIx_Handle_t *xSPI);
+void SPI_Init(SPIx_Handle_t *xSPI);
 void SPI_DeInit(SPIx_RegDef *xSPI);
 
 void USART_Receive_Polling(SPIx_RegDef *xSPI, uint8_t *RXbuffor,uint32_t length);

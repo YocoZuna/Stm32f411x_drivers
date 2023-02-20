@@ -26,7 +26,7 @@
 
 #define DRV_AHB2_BASE_ADR 				0x50000000U
 #define DRV_AHB1_BASE_ADR				0x40020000U
-#define DRV_APB2_BASE_ADR				(0x40010000U)
+#define DRV_APB2_BASE_ADR				0x40010000U
 #define DRV_APB1_BASE_ADR				0x40000000U
 
 /***************************************************************************
@@ -95,6 +95,16 @@
 #define SPI3_REG_RESET() 	do { RCC->RCC_APB1RSTR |= (1<<15); (RCC->RCC_APB1RSTR &=~(1<<15));} while(0)
 #define SPI4_REG_RESET() 	do { RCC->RCC_APB2RSTR |= (1<<13); (RCC->RCC_APB2RSTR &=~(1<<13));} while(0)
 
+/**************************************************************************
+ * 											USART
+ **************************************************************************/
+
+#define RCC_USART2_EN()		RCC->RCC_APB1ENR |= (1<<17)
+
+#define RCC_USART2_DS()
+
+
+#define USART2_REG_RESET()	do { RCC->RCC_APB1RSTR |=(1<<17) ; (RCC->RCC_APB1RSTR &=~(1<<17));} while(0)
 
 /**************************************************************************
  * 										APB1
@@ -103,7 +113,7 @@
 #define DRV_I2C2						(DRV_APB1_BASE_ADR+0x5800)
 #define DRV_I2C3						(DRV_APB1_BASE_ADR+0x5C00)
 
-#define DRV_USART2						(APB1_BASE_ADR+0x4400)
+#define DRV_USART2						(DRV_APB1_BASE_ADR+0x4400)
 
 #define DRV_SPI3						(DRV_APB2_BASE_ADR+0x3C00)
 #define DRV_SPI2						(DRV_APB1_BASE_ADR+0x3800)
@@ -156,4 +166,6 @@
 
 #define SET 1
 #define RESET 0
+
+#define CPACR							((uint32_t*) 0xE000ED88)
 #endif /* INC_STM32F411X_H_ */
